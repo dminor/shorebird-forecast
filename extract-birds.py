@@ -5,17 +5,15 @@ import pandas as pd
 
 
 # Locations of interest
+# Name, lat, long, radius around location for observations
 LOCATIONS = [
-    ('Andrew Haydon Park', math.radians(45.3527032), math.radians(-75.812906)),
-    ('Carp River Reclamation Area', math.radians(45.3113862), math.radians(-75.9366202)),
-    ('Champlain Bridge', math.radians(45.405), math.radians(-75.755)),
-    ('Petrie Island', math.radians(45.5029782), math.radians(-75.4917383)),
-    ('Shirley\'s Bay', math.radians(45.3746843), math.radians(-75.8909583)),
+    ('Andrew Haydon Park', math.radians(45.3527032), math.radians(-75.812906), 500),
+    ('Carp River Reclamation Area', math.radians(45.3113862), math.radians(-75.9366202), 500),
+    ('Champlain Bridge', math.radians(45.405), math.radians(-75.755), 500),
+    ('Petrie Island', math.radians(45.5029782), math.radians(-75.4917383), 500),
+    ('Shirley\'s Bay', math.radians(45.3746843), math.radians(-75.8909583), 500),
+    ('OFNC Study Area', math.radians(45.4248058), math.radians(-75.6996606), 50000),
 ]
-
-
-# Radius around location for which we are interested in observations
-RADIUS = 1000
 
 
 def haversine(lat1, lng1, lat2, lng2):
@@ -33,7 +31,7 @@ dates = []
 locations = []
 records = 0
 
-with gzip.open('data/ebd_relMay-2018.txt.gz', 'rb') as f:
+with gzip.open('data/ebd_relDec-2018.txt.gz', 'rb') as f:
     first = True
     headers = {}
     for line in f:
@@ -57,7 +55,7 @@ with gzip.open('data/ebd_relMay-2018.txt.gz', 'rb') as f:
         for location in LOCATIONS:
             r = haversine(location[1], location[2], lat, lng)
 
-            if r < RADIUS:
+            if r < location[3]:
                 names.append(fields[headers['COMMON NAME']])
                 counts.append(fields[headers['OBSERVATION COUNT']])
                 lats.append(fields[headers['LATITUDE']])

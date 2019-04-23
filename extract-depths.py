@@ -3,7 +3,7 @@ import pandas as pd
 dates = []
 depths = []
 
-with open('data/Daily__Jan-19-2019_03_49_07PM.csv', 'r') as f:
+with open('data/Daily__Mar-30-2019_02_34_32PM.csv', 'r') as f:
     # skip first line, headers start at line 2
     f.readline()
 
